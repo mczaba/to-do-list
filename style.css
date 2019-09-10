@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+}
+
+#addBar {
+    background-color: green;
+    width: 100%;
+    text-align: center;
+}
+
+#newTask, #newProject {
+    text-align: center;
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 600px;
+    height: 200px;
+    margin: auto;
+    border: 2px solid black;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow:0 0 0 2000px rgba(0,0,0,0.5);
+
+}
+
+#content{
+    margin-top:50px;
+    height: 800px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+#projectList{
+    background-color: grey;
+    border-radius:10px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#projectView{
+    background-color: grey;
+    border-radius: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
