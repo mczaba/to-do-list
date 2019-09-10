@@ -1,6 +1,20 @@
 body {
     margin: 0;
 }
+ul {
+    list-style-type:none;
+}
+li {
+    margin-top: 10px;
+}
+li:hover{
+    background-color: red;
+    cursor: pointer;
+}
+
+.description {
+    display: none;
+}
 
 #addBar {
     background-color: green;
@@ -9,6 +23,8 @@ body {
 }
 
 #newTask, #newProject {
+    padding-top: 30px;
+    padding-bottom: 30px;
     text-align: center;
     display: none;
     position: absolute;
@@ -16,8 +32,8 @@ body {
     right: 0;
     top: 0;
     bottom: 0;
-    width: 600px;
-    height: 200px;
+    width: 400px;
+    height: 250px;
     margin: auto;
     border: 2px solid black;
     background-color: white;
