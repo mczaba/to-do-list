@@ -1,17 +1,17 @@
-function createTask (name,description, date){
-    return {name, description, date};
+function createTask (name, description, project){
+    return {name, description, project};
 }
 
-function addTaskToProject (project, toDo){
-    project.push(toDo);
+function addTaskToProject (toDo){
+    toDos.push(toDo);
 }
-let ToDos = [];
+let toDos = []
+let projectNames = ["default", "test"];
 
-let premierToDo = createTask("premier", "premier description", "2009");
-let deuxiemeToDo = createTask("deuxieme", "deuxieme description", "2009");
-let troisiemeToDo = createTask("troisieme", "troisieme description", "2009");
-ToDos.push(premierToDo);
-ToDos.push(deuxiemeToDo);
-ToDos.push(troisiemeToDo);
-
-export {createTask, ToDos, addTaskToProject}
+let premierToDo = createTask("premier", "premier description", "default");
+let deuxiemeToDo = createTask("deuxieme", "deuxieme description",  "default");
+let troisiemeToDo = createTask("troisieme", "troisieme description", "test");
+addTaskToProject(premierToDo);
+addTaskToProject(deuxiemeToDo);
+addTaskToProject(troisiemeToDo);
+export {createTask, toDos, addTaskToProject, projectNames}
