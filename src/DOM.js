@@ -1,4 +1,4 @@
-import {createTask, toDos, addTaskToProject, projectNames} from "./todos"
+import {createTask, toDos, addTaskToProject, projectNames, displayDate} from "./todos"
 
 const addTask = document.querySelector("#addTask");
 const addProject = document.querySelector("#addProject");
@@ -10,6 +10,8 @@ const addThisProject = document.querySelector("#addThisProject");
 const toDoDisplay = document.querySelector("#projectView")
 const taskName = document.querySelector("#taskName");
 const taskDesc = document.querySelector("#taskDesc");
+const taskDate = document.querySelector("#taskDate");
+const taskImportance = document.querySelector("#taskImportance");
 const projectList = document.querySelector("#projectList");
 const projectName = document.querySelector("#projectName");
 const projectBind = document.querySelector("#projectBind");
@@ -38,7 +40,7 @@ const events = () => {
     addProject.addEventListener("click", showDiv.bind(null, newProject));
     addThisTask.addEventListener("click", ()=> {
         hideDiv(newTask);
-        let newToDo = createTask(taskName.value , taskDesc.value, projectBind.value)
+        let newToDo = createTask(taskName.value , taskDesc.value, taskDate.value, taskImportance.value, projectBind.value)
         addTaskToProject(newToDo);
         renderProject(projectBind.value);
     });
@@ -55,6 +57,14 @@ function renderTask(item, container){
     let itemName = document.createElement("li");
     itemName.textContent = item.name;
     container.appendChild(itemName);
+    let itemDate = document.createElement("p");
+    itemDate.textContent = displayDate(item.date);
+    itemDate.classList = "date";
+    itemName.appendChild(itemDate);
+    let itemImportance = document.createElement("p");
+    itemImportance.textContent = item.importance;
+    itemImportance.classList = "importance";
+    itemName.appendChild(itemImportance);
     let itemDesc = document.createElement("div");
     itemDesc.textContent = item.description;
     itemDesc.classList = "description"
@@ -75,7 +85,7 @@ function renderProject(projet) {
     const list = document.createElement("ul");
     toDoDisplay.appendChild(list);
     toDos.forEach((item) => {
-        if (item.project === projet){
+        if ((item.project === projet)||(projet === "all")){
             renderTask(item, list);
         }
     })

@@ -3,9 +3,13 @@ body {
 }
 ul {
     list-style-type:none;
+    padding-right: 40px;
 }
 li {
     margin-top: 10px;
+    width: 100%;
+    position: relative;
+
 }
 li:hover{
     background-color: red;
@@ -14,8 +18,20 @@ li:hover{
 
 .description {
     display: none;
+    margin-left: 70px;
 }
-
+.date {
+    display: inline-block;
+    position: absolute;
+    left: 500px;
+    margin: 0;
+}
+.importance {
+    display: inline-block;
+    position: absolute;
+    left: 800px;
+    margin: 0;
+}
 #addBar {
     background-color: green;
     width: 100%;
@@ -39,6 +55,7 @@ li:hover{
     background-color: white;
     border-radius: 10px;
     box-shadow:0 0 0 2000px rgba(0,0,0,0.5);
+    z-index: 1;
 
 }
 
