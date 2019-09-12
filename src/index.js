@@ -1,7 +1,7 @@
 import {events, renderProject, renderProjects} from "./DOM"
-import {toDos} from "./todos"
+import {initializeArrays, createTask, addTaskToProject} from "./todos"
 
-
+initializeArrays();
 events();
 renderProjects()
 renderProject("all");

@@ -1,4 +1,4 @@
-import {createTask, toDos, addTaskToProject, projectNames, displayDate, sortDate} from "./todos"
+import {createTask, toDos, addTaskToProject, projectToArray, projectNames, displayDate, sortDate, addProjectToArray} from "./todos"
 
 const addTask = document.querySelector("#addTask");
 const addProject = document.querySelector("#addProject");
@@ -47,7 +47,7 @@ const events = () => {
     addThisProject.addEventListener("click", () => {
         hideDiv(newProject);
         let newProjectName = projectName.value;
-        projectNames.push(newProjectName);
+        projectToArray(newProjectName);
         renderProjects();
     });
 
