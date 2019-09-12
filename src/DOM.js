@@ -1,4 +1,4 @@
-import {createTask, toDos, addTaskToProject, projectNames, displayDate} from "./todos"
+import {createTask, toDos, addTaskToProject, projectNames, displayDate, sortDate} from "./todos"
 
 const addTask = document.querySelector("#addTask");
 const addProject = document.querySelector("#addProject");
@@ -54,17 +54,33 @@ const events = () => {
 }
 
 function renderTask(item, container){
-    let itemName = document.createElement("li");
+    let taskRow = document.createElement("li")
+    taskRow.classList = "taskRow";
+    container.appendChild(taskRow);
+
+    
+    let itemName = document.createElement("div");
     itemName.textContent = item.name;
-    container.appendChild(itemName);
+    itemName.classList = "taskName";
+    taskRow.appendChild(itemName);
+
     let itemDate = document.createElement("p");
     itemDate.textContent = displayDate(item.date);
     itemDate.classList = "date";
     itemName.appendChild(itemDate);
+
     let itemImportance = document.createElement("p");
     itemImportance.textContent = item.importance;
     itemImportance.classList = "importance";
+    importanceColor(itemImportance);
     itemName.appendChild(itemImportance);
+    
+    let doneButton = document.createElement("button");
+    doneButton.textContent = "done"
+    doneButton.classList = "doneButton";
+    doneButton.addEventListener("click", () => {container.removeChild(itemName)});
+    taskRow.appendChild(doneButton);
+
     let itemDesc = document.createElement("div");
     itemDesc.textContent = item.description;
     itemDesc.classList = "description"
@@ -73,6 +89,10 @@ function renderTask(item, container){
         descToggle(itemDesc);
         colorToggleTask(itemName);
     });
+    doneButton.addEventListener("click", () => {
+        container.removeChild(itemDesc);
+        container.removeChild(taskRow);
+    });
 }
 
 function renderProject(projet) {
@@ -80,10 +100,12 @@ function renderProject(projet) {
         toDoDisplay.removeChild(toDoDisplay.firstChild);
     }
     const header = document.createElement("h1");
-    header.textContent = projet;
+    header.textContent = "Project : " + projet;
     toDoDisplay.appendChild(header);
+
     const list = document.createElement("ul");
     toDoDisplay.appendChild(list);
+    sortDate();
     toDos.forEach((item) => {
         if ((item.project === projet)||(projet === "all")){
             renderTask(item, list);
@@ -95,6 +117,9 @@ function renderProjects() {
     while (projectList.firstChild){
         projectList.removeChild(projectList.firstChild);
     }
+    const header = document.createElement("h1");
+    header.textContent = "Projects";
+    projectList.appendChild(header);
     const list = document.createElement("ul");
     projectList.appendChild(list);
     projectNames.forEach((item) => {
@@ -114,24 +139,26 @@ function renderProjectBind() {
         projectBind.removeChild(projectBind.firstChild);
     }
     projectNames.forEach((item) => {
-        let projectName = document.createElement("option");
-        projectName.textContent = item;
-        projectName.value = item;
-        projectBind.appendChild(projectName);
+        if (item !== "all"){
+            let projectName = document.createElement("option");
+            projectName.textContent = item;
+            projectName.value = item;
+            projectBind.appendChild(projectName);
+        }
     })
 }
 
 
 function descToggle (div){
-    if (div.style.display === "block"){div.style.display = "none"}
+    if (div.style.display === "block"){div.style.removeProperty("display")}
     else {div.style.display = "block";}
 }
 
 function colorToggleTask (task){
-    if (task.style.backgroundColor === "red"){
+    if (task.style.backgroundColor === "rgb(236, 236, 236)"){
         task.style.removeProperty("background-color");
     }
-    else {task.style.backgroundColor = "red"}
+    else {task.style.backgroundColor = "rgb(236, 236, 236)"}
 }
 
 function colorToggleProject (project){
@@ -140,8 +167,14 @@ function colorToggleProject (project){
         if (item !== project) {
             item.style.removeProperty("background-color");
         }
-        else {item.style.backgroundColor = "red";}
+        else {item.style.backgroundColor = "rgb(236, 236, 236)";}
     })
 }
+
+function importanceColor (div){
+    if (div.textContent === "Not Important"){div.style.color = "grey";}
+    else if (div.textContent === "Important"){div.style.color = "orange";}
+    else if (div.textContent === "Very Important"){div.style.color = "red";}
+}   
 
 export {events, renderProject, renderProjects};

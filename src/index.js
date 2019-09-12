@@ -4,4 +4,4 @@ import {toDos} from "./todos"
 
 events();
 renderProjects()
-renderProject("default");
+renderProject("all");

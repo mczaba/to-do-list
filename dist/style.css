@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    background-color :rgb(236, 236, 236);
 }
 ul {
     list-style-type:none;
@@ -7,34 +8,52 @@ ul {
 }
 li {
     margin-top: 10px;
-    width: 100%;
+    height: 30px;
     position: relative;
 
 }
-li:hover{
-    background-color: red;
+.taskName:hover{
+    background-color: rgb(236, 236, 236);
+    cursor: pointer;
+}
+.project:hover{
+    background-color: rgb(236, 236, 236);
     cursor: pointer;
 }
 
+.taskName {
+    width: 830px;
+}
+
+.taskRow {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    border-top: 1px solid black;
+    padding-top: 10px;
+}
 .description {
     display: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
     margin-left: 70px;
 }
 .date {
     display: inline-block;
     position: absolute;
-    left: 500px;
+    left: 400px;
     margin: 0;
 }
 .importance {
     display: inline-block;
     position: absolute;
-    left: 800px;
+    left: 700px;
     margin: 0;
 }
+
 #addBar {
-    background-color: green;
+    background-color: rgb(189, 24, 24);
     width: 100%;
+    height: 60px;
     text-align: center;
 }
 
@@ -60,23 +79,36 @@ li:hover{
 }
 
 #content{
-    margin-top:50px;
-    height: 800px;
-    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 1000px;
+    width: 70%;
     display: grid;
     grid-template-columns: 1fr 3fr;
 }
 
 #projectList{
-    background-color: grey;
-    border-radius:10px;
-    margin-left: 50px;
-    margin-right: 50px;
+    background-color: white;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    padding-left: 30px;
+
 }
 
 #projectView{
-    background-color: grey;
-    border-radius: 10px;
-    margin-left: 50px;
-    margin-right: 50px;
+    background-color: white;
+    border-right: 1px solid black;
+    padding-left: 30px;
+}
+
+#addProject {
+    position: relative;
+    left: -550px;
+    top: 15px;
+}
+
+#addTask {
+    position: relative;
+    left: -330px;
+    top: 15px;
 }
