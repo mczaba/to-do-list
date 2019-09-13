@@ -49,6 +49,26 @@ function initializeArrays() {
     }
 }
 
+function deleteTask(task){
+    let index = toDos.indexOf(task);
+    toDos.splice(index,1);
+    populateStorage();
+}
+
+function deleteProject (projet){
+    let index = projectNames.indexOf(projet);
+    projectNames.splice(index,1);
+    let i =0;
+    while (i < toDos.length){
+        if (toDos[i].project === projet){
+            toDos.splice(i,1);
+        }
+        else {
+            i++;
+        }
+    }
+    populateStorage();
+}
 
 
-export {createTask, toDos, addTaskToProject, projectToArray, initializeArrays, projectNames, displayDate, sortDate}
+export {createTask, toDos, addTaskToProject, projectToArray, initializeArrays, projectNames, displayDate, sortDate, deleteTask, deleteProject}

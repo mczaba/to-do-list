@@ -1,4 +1,4 @@
-import {createTask, toDos, addTaskToProject, projectToArray, projectNames, displayDate, sortDate, addProjectToArray} from "./todos"
+import {createTask, deleteTask, deleteProject, toDos, addTaskToProject, projectToArray, projectNames, displayDate, sortDate, addProjectToArray} from "./todos"
 
 const addTask = document.querySelector("#addTask");
 const addProject = document.querySelector("#addProject");
@@ -58,23 +58,8 @@ function renderTask(item, container){
     taskRow.classList = "taskRow";
     container.appendChild(taskRow);
 
-    
-    let itemName = document.createElement("div");
-    itemName.textContent = item.name;
-    itemName.classList = "taskName";
-    taskRow.appendChild(itemName);
+    let itemName = renderTaskItem(item, taskRow);
 
-    let itemDate = document.createElement("p");
-    itemDate.textContent = displayDate(item.date);
-    itemDate.classList = "date";
-    itemName.appendChild(itemDate);
-
-    let itemImportance = document.createElement("p");
-    itemImportance.textContent = item.importance;
-    itemImportance.classList = "importance";
-    importanceColor(itemImportance);
-    itemName.appendChild(itemImportance);
-    
     let doneButton = document.createElement("button");
     doneButton.textContent = "done"
     doneButton.classList = "doneButton";
@@ -90,20 +75,57 @@ function renderTask(item, container){
         colorToggleTask(itemName);
     });
     doneButton.addEventListener("click", () => {
-        container.removeChild(itemDesc);
-        container.removeChild(taskRow);
+        let projet = item.project;
+        deleteTask(item);
+        renderProject(projet);
     });
 }
 
+function renderTaskItem(item, row){
+    let itemName = document.createElement("div");
+    itemName.textContent = item.name;
+    itemName.classList = "taskName";
+    row.appendChild(itemName);
+
+    let itemDate = document.createElement("p");
+    itemDate.textContent = displayDate(item.date);
+    itemDate.classList = "date";
+    itemName.appendChild(itemDate);
+
+    let itemImportance = document.createElement("p");
+    itemImportance.textContent = item.importance;
+    itemImportance.classList = "importance";
+    importanceColor(itemImportance);
+    itemName.appendChild(itemImportance);
+
+    return itemName;
+}
+
 function renderProject(projet) {
+    colorToggleProject(projet);
     while (toDoDisplay.firstChild){
         toDoDisplay.removeChild(toDoDisplay.firstChild);
     }
     const header = document.createElement("h1");
     header.textContent = "Project : " + projet;
     toDoDisplay.appendChild(header);
+    if (projet !== "all"){
+        const remove = document.createElement("button");
+        remove.textContent = "Delete Project";
+        toDoDisplay.appendChild(remove);
+        remove.addEventListener("click", () => {
+            deleteProject(projet);
+            renderProjects();
+            renderProject("all");
+        });
+    }
+
+    const secondHeader = document.createElement("h2");
+    secondHeader.textContent = "Tasks : ";
+    toDoDisplay.appendChild(secondHeader);
 
     const list = document.createElement("ul");
+    list.classList = "taskList"
     toDoDisplay.appendChild(list);
     sortDate();
     toDos.forEach((item) => {
@@ -128,7 +150,7 @@ function renderProjects() {
         projectName.classList = "project";
         projectName.addEventListener("click", () => {
             renderProject(projectName.textContent);
-            colorToggleProject(projectName);
+            colorToggleProject(projectName.textContent);
         });
         list.appendChild(projectName);
     })
@@ -164,7 +186,7 @@ function colorToggleTask (task){
 function colorToggleProject (project){
     let projects = document.querySelectorAll(".project");
     projects.forEach((item) => {
-        if (item !== project) {
+        if (item.textContent !== project) {
             item.style.removeProperty("background-color");
         }
         else {item.style.backgroundColor = "rgb(236, 236, 236)";}
