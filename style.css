@@ -39,14 +39,13 @@ li {
 .taskRow {
     display: grid;
     grid-template-columns: 5fr 1fr;
-    border-top: -1px solid black;
-    border-bottom: 1px solid black;
+    border-top: 1px solid black;
     padding-top: 10px;
 }
 .description {
     display: none;
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     margin-left: 70px;
 }
 .date {
