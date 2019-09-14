@@ -1,8 +1,5 @@
 
-let premierToDo = createTask("premier", "premier description", "2009-05-12", "Not Important", "default");
-let deuxiemeToDo = createTask("deuxieme", "deuxieme description", "2009-08-30", "Important", "default");
-let troisiemeToDo = createTask("troisieme", "troisieme description", "2009-12-05", "Very Important", "test");
-let toDos = [premierToDo, deuxiemeToDo, troisiemeToDo]
+let toDos = []
 let projectNames = ["all", "test"];
 
 function createTask (name, description, date, importance, project){
