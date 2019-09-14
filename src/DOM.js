@@ -21,22 +21,52 @@ const sortType = document.querySelector("#sortType");
 
 
 function showDiv(div) {
+    // document.addEventListener("click", (e) => {
+    //     let target = e.target;
+    //     while (target){
+    //         if (target == div){
+    //             console.log("click inside");
+    //             return;
+    //         }
+    //         target=target.parentNode;
+    //     }
+    //     hideDiv(div);
+    //     console.log("click outside");
+    // });
     div.style.display = 'inline'
     buttons.forEach((button) => {
         if (button.closest("div")!==div){
             button.disabled = true
         }
     })
+    let tasksHover = document.querySelectorAll(".taskName");
+    tasksHover.forEach((item) => {
+        item.classList = "taskNameNoHover";
+    })
+    let projectsHover = document.querySelectorAll(".project");
+    projectsHover.forEach((item) => {
+        item.classList = "projectNoHover";
+    })
+    
 }
 
 
 function hideDiv(div) {
     div.style.display = "none"
     buttons.forEach((button) => button.disabled = false)
+    let tasksHover = document.querySelectorAll(".taskNameNoHover");
+    tasksHover.forEach((item) => {
+        item.classList = "taskName";
+    })
+    let projectsHover = document.querySelectorAll(".projectNoHover");
+    projectsHover.forEach((item) => {
+        item.classList = "project";
+    })
+    
 }
 
-const events = () => {
-
+const events = () => { 
+//adds the click events on baseline buttons
     addTask.addEventListener("click", () => {
         renderProjectBind();
         showDiv(newTask);
@@ -58,10 +88,12 @@ const events = () => {
         sortTasks(sortType.value);
         renderCurrentProject();
     });
+    
 
 }
 
 function renderTask(item, container){
+//render a row for the item task in the container
     let taskRow = document.createElement("li")
     taskRow.classList = "taskRow";
     container.appendChild(taskRow);
@@ -91,6 +123,7 @@ function renderTask(item, container){
 
 
 function renderTaskItem(item, row){
+//render the viewable properties of the task
     let itemName = document.createElement("div");
     itemName.textContent = item.name;
     itemName.classList = "taskName";
@@ -148,12 +181,14 @@ function renderProject(projet) {
 }
 
 function getProjectName(){
+//get the name of the project currently rendered
     const projectHeader = document.querySelector("#projectHeader");
     let projectName = projectHeader.textContent.replace("Project : ", "");
     return projectName;
 }
 
 function renderCurrentProject(){
+//refreshes the rendering of the current project
     if (getProjectName() === "all"){
         renderProject("all");
     }
@@ -163,6 +198,7 @@ function renderCurrentProject(){
 }
 
 function renderProjects() {
+//renders the project list
     while (projectList.firstChild){
         projectList.removeChild(projectList.firstChild);
     }
@@ -184,6 +220,7 @@ function renderProjects() {
 }
 
 function renderProjectBind() {
+//render the select option with all project in the newTask div
     while (projectBind.firstChild){
         projectBind.removeChild(projectBind.firstChild);
     }
@@ -199,11 +236,13 @@ function renderProjectBind() {
 
 
 function descToggle (div){
+//show or hide the description of a task
     if (div.style.display === "block"){div.style.removeProperty("display")}
     else {div.style.display = "block";}
 }
 
 function colorToggleTask (task){
+//highlight or remove highlight of a task
     if (task.style.backgroundColor === "rgb(236, 236, 236)"){
         task.style.removeProperty("background-color");
     }
@@ -211,6 +250,7 @@ function colorToggleTask (task){
 }
 
 function colorToggleProject (project){
+//highlight or remove highlight of a project
     let projects = document.querySelectorAll(".project");
     projects.forEach((item) => {
         if (item.textContent !== project) {
