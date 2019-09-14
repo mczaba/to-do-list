@@ -27,12 +27,37 @@ function displayDate(date){
     return string;
 }
 
-function sortDate() {
-    toDos.sort(function(a, b){
-        if(a.date < b.date) { return -1; }
-        if(a.date > b.date) { return 1; }
-        return 0;
-    })
+function sortTasks (type){
+
+    function sortDate() {
+        toDos.sort(function(a, b){
+            if(a.date < b.date) { return -1; }
+            if(a.date > b.date) { return 1; }
+            return 0;
+        })
+    }
+
+    function sortImportance() {
+        function importanceNumber(string){
+            if (string === "Not Important"){
+                return 1;
+            }
+            else if (string === "Important"){
+                return 2;
+            }
+            else if (string === "Very Important"){
+                return 3;
+            }
+        }
+        toDos.sort(function(a,b){
+            if (importanceNumber(a.importance) > importanceNumber(b.importance)){ return -1;}
+            if (importanceNumber(a.importance) < importanceNumber(b.importance)) {return 1;}
+            return 0;
+        })
+    }
+
+    if (type === "date"){sortDate();}
+    if (type === "importance"){sortImportance();}
 }
 
 function populateStorage() {
@@ -71,4 +96,4 @@ function deleteProject (projet){
 }
 
 
-export {createTask, toDos, addTaskToProject, projectToArray, initializeArrays, projectNames, displayDate, sortDate, deleteTask, deleteProject}
+export {createTask, toDos, addTaskToProject, projectToArray, initializeArrays, projectNames, displayDate, deleteTask, deleteProject, sortTasks}

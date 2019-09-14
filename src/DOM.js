@@ -1,4 +1,5 @@
-import {createTask, deleteTask, deleteProject, toDos, addTaskToProject, projectToArray, projectNames, displayDate, sortDate, addProjectToArray} from "./todos"
+import {createTask, deleteTask, deleteProject, toDos, addTaskToProject, 
+    projectToArray, projectNames, displayDate, sortTasks} from "./todos"
 
 const addTask = document.querySelector("#addTask");
 const addProject = document.querySelector("#addProject");
@@ -15,6 +16,9 @@ const taskImportance = document.querySelector("#taskImportance");
 const projectList = document.querySelector("#projectList");
 const projectName = document.querySelector("#projectName");
 const projectBind = document.querySelector("#projectBind");
+const sortButton = document.querySelector("#sortButton");
+const sortType = document.querySelector("#sortType");
+
 
 function showDiv(div) {
     div.style.display = 'inline'
@@ -42,13 +46,17 @@ const events = () => {
         hideDiv(newTask);
         let newToDo = createTask(taskName.value , taskDesc.value, taskDate.value, taskImportance.value, projectBind.value)
         addTaskToProject(newToDo);
-        renderProject(projectBind.value);
+        renderCurrentProject();
     });
     addThisProject.addEventListener("click", () => {
         hideDiv(newProject);
         let newProjectName = projectName.value;
         projectToArray(newProjectName);
         renderProjects();
+    });
+    sortButton.addEventListener("click", () => {
+        sortTasks(sortType.value);
+        renderCurrentProject();
     });
 
 }
@@ -75,11 +83,12 @@ function renderTask(item, container){
         colorToggleTask(itemName);
     });
     doneButton.addEventListener("click", () => {
-        let projet = item.project;
+        let projet = getProjectName();
         deleteTask(item);
         renderProject(projet);
     });
 }
+
 
 function renderTaskItem(item, row){
     let itemName = document.createElement("div");
@@ -101,6 +110,8 @@ function renderTaskItem(item, row){
     return itemName;
 }
 
+
+
 function renderProject(projet) {
     colorToggleProject(projet);
     while (toDoDisplay.firstChild){
@@ -108,6 +119,7 @@ function renderProject(projet) {
     }
     const header = document.createElement("h1");
     header.textContent = "Project : " + projet;
+    header.id = "projectHeader";
     toDoDisplay.appendChild(header);
     if (projet !== "all"){
         const remove = document.createElement("button");
@@ -127,12 +139,27 @@ function renderProject(projet) {
     const list = document.createElement("ul");
     list.classList = "taskList"
     toDoDisplay.appendChild(list);
-    sortDate();
+    sortTasks(sortType.value);
     toDos.forEach((item) => {
         if ((item.project === projet)||(projet === "all")){
             renderTask(item, list);
         }
     })
+}
+
+function getProjectName(){
+    const projectHeader = document.querySelector("#projectHeader");
+    let projectName = projectHeader.textContent.replace("Project : ", "");
+    return projectName;
+}
+
+function renderCurrentProject(){
+    if (getProjectName() === "all"){
+        renderProject("all");
+    }
+    else{
+        renderProject(getProjectName());
+    }
 }
 
 function renderProjects() {
