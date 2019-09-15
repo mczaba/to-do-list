@@ -6,7 +6,6 @@ ul {
     padding-right: 40px;
 }
 li {
-    padding-bottom: 10px;
     height: 30px;
     position: relative;
     line-height: 30px;
@@ -41,6 +40,7 @@ li {
     grid-template-columns: 5fr 1fr;
     border-top: 1px solid black;
     padding-top: 10px;
+    margin-bottom: 10px;
 }
 .description {
     display: none;
