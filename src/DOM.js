@@ -78,15 +78,24 @@ const events = () => {
     addProject.addEventListener("mouseup", showDiv.bind(null, newProject));
     addThisTask.addEventListener("click", ()=> {
         hideDiv(newTask);
-        let newToDo = createTask(taskName.value , taskDesc.value, taskDate.value, taskImportance.value, projectBind.value)
-        addTaskToProject(newToDo);
-        renderCurrentProject();
+        if ((taskName.value === "") || (taskDate.value === "")){alert("Invalid informations. Please fill Name and Date.")}
+        else {
+            let newToDo = createTask(taskName.value , taskDesc.value, taskDate.value, taskImportance.value, projectBind.value)
+            addTaskToProject(newToDo);
+            renderCurrentProject();
+        }
+        
+        
     });
     addThisProject.addEventListener("click", () => {
         hideDiv(newProject);
-        let newProjectName = projectName.value;
-        projectToArray(newProjectName);
-        renderProjects();
+        if (projectName.value === ""){alert("Choose a name for your project.")}
+        else if (projectNames.includes(projectName.value)){alert("There's already a project with this name.")}
+        else {
+            let newProjectName = projectName.value;
+            projectToArray(newProjectName);
+            renderProjects();
+        }
     });
     sortButton.addEventListener("click", () => {
         sortTasks(sortType.value);
