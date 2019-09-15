@@ -18,21 +18,20 @@ const projectName = document.querySelector("#projectName");
 const projectBind = document.querySelector("#projectBind");
 const sortButton = document.querySelector("#sortButton");
 const sortType = document.querySelector("#sortType");
+const clearStorage = document.querySelector("#clearStorage");
 
 
 
 function clickOutsideOf(event){
     let target = event.target;
     while (target){
-        if (target.classList == "popup"){
-            console.log("click inside");
+        if (target.className == "popup"){
             return;
         }
         target=target.parentNode;
     }
     const popups = document.querySelectorAll('.popup');
     popups.forEach((div) => hideDiv(div));
-    console.log("click outside");
 }
 
 function showDiv(div) {
@@ -45,11 +44,11 @@ function showDiv(div) {
     })
     let tasksHover = document.querySelectorAll(".taskName");
     tasksHover.forEach((item) => {
-        item.classList = "taskNameNoHover";
+        item.className = "taskNameNoHover";
     })
     let projectsHover = document.querySelectorAll(".project");
     projectsHover.forEach((item) => {
-        item.classList = "projectNoHover";
+        item.className = "projectNoHover";
     })
     
 }
@@ -60,25 +59,28 @@ function hideDiv(div) {
     buttons.forEach((button) => button.disabled = false)
     let tasksHover = document.querySelectorAll(".taskNameNoHover");
     tasksHover.forEach((item) => {
-        item.classList = "taskName";
+        item.className = "taskName";
     })
     let projectsHover = document.querySelectorAll(".projectNoHover");
     projectsHover.forEach((item) => {
-        item.classList = "project";
+        item.className = "project";
     })
     
 }
 
 const events = () => { 
 //adds the click events on baseline buttons
-    addTask.addEventListener("mouseup", () => {
+    addTask.addEventListener("click", () => {
         renderProjectBind();
-        showDiv(newTask);
+        setTimeout(showDiv, 1, newTask);
     });
-    addProject.addEventListener("mouseup", showDiv.bind(null, newProject));
+    addProject.addEventListener("click", () => {
+        setTimeout(showDiv, 1, newProject);
+    });
     addThisTask.addEventListener("click", ()=> {
         hideDiv(newTask);
         if ((taskName.value === "") || (taskDate.value === "")){alert("Invalid informations. Please fill Name and Date.")}
+        else if (projectBind.value === ""){alert("You need to create a project before creating a task")}
         else {
             let newToDo = createTask(taskName.value , taskDesc.value, taskDate.value, taskImportance.value, projectBind.value)
             addTaskToProject(newToDo);
@@ -101,7 +103,10 @@ const events = () => {
         sortTasks(sortType.value);
         renderCurrentProject();
     });
-    
+    clearStorage.addEventListener("click", () => {
+        localStorage.clear();
+        window.location.reload();
+    });
 
 }
 
