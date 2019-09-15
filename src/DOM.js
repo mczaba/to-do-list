@@ -20,19 +20,31 @@ const sortButton = document.querySelector("#sortButton");
 const sortType = document.querySelector("#sortType");
 
 
+// function clickOutsideOf(event){
+//     let target = event.target;
+//     if ((target.classList == "popup") || (target.parentNode.classList == "popup")){
+//         return;
+//     }
+//     const popups = document.querySelectorAll('.popup');
+//     popups.forEach((div) => hideDiv(div));
+// }
+
+function clickOutsideOf(event){
+    let target = event.target;
+    while (target){
+        if (target.classList == "popup"){
+            console.log("click inside");
+            return;
+        }
+        target=target.parentNode;
+    }
+    const popups = document.querySelectorAll('.popup');
+    popups.forEach((div) => hideDiv(div));
+    console.log("click outside");
+}
+
 function showDiv(div) {
-    // document.addEventListener("click", (e) => {
-    //     let target = e.target;
-    //     while (target){
-    //         if (target == div){
-    //             console.log("click inside");
-    //             return;
-    //         }
-    //         target=target.parentNode;
-    //     }
-    //     hideDiv(div);
-    //     console.log("click outside");
-    // });
+    document.addEventListener("click", clickOutsideOf);
     div.style.display = 'inline'
     buttons.forEach((button) => {
         if (button.closest("div")!==div){
@@ -67,11 +79,11 @@ function hideDiv(div) {
 
 const events = () => { 
 //adds the click events on baseline buttons
-    addTask.addEventListener("click", () => {
+    addTask.addEventListener("mouseup", () => {
         renderProjectBind();
         showDiv(newTask);
     });
-    addProject.addEventListener("click", showDiv.bind(null, newProject));
+    addProject.addEventListener("mouseup", showDiv.bind(null, newProject));
     addThisTask.addEventListener("click", ()=> {
         hideDiv(newTask);
         let newToDo = createTask(taskName.value , taskDesc.value, taskDate.value, taskImportance.value, projectBind.value)

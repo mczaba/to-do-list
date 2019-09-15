@@ -1,6 +1,6 @@
 
 let toDos = []
-let projectNames = ["all", "test"];
+let projectNames = ["All Tasks"];
 
 function createTask (name, description, date, importance, project){
     return {name, description, date, importance, project};
