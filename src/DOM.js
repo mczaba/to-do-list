@@ -20,14 +20,6 @@ const sortButton = document.querySelector("#sortButton");
 const sortType = document.querySelector("#sortType");
 
 
-// function clickOutsideOf(event){
-//     let target = event.target;
-//     if ((target.classList == "popup") || (target.parentNode.classList == "popup")){
-//         return;
-//     }
-//     const popups = document.querySelectorAll('.popup');
-//     popups.forEach((div) => hideDiv(div));
-// }
 
 function clickOutsideOf(event){
     let target = event.target;
@@ -166,14 +158,14 @@ function renderProject(projet) {
     header.textContent = "Project : " + projet;
     header.id = "projectHeader";
     toDoDisplay.appendChild(header);
-    if (projet !== "all"){
+    if (projet !== "All Tasks"){
         const remove = document.createElement("button");
         remove.textContent = "Delete Project";
         toDoDisplay.appendChild(remove);
         remove.addEventListener("click", () => {
             deleteProject(projet);
             renderProjects();
-            renderProject("all");
+            renderProject("All Tasks");
         });
     }
 
@@ -186,7 +178,7 @@ function renderProject(projet) {
     toDoDisplay.appendChild(list);
     sortTasks(sortType.value);
     toDos.forEach((item) => {
-        if ((item.project === projet)||(projet === "all")){
+        if ((item.project === projet)||(projet === "All Tasks")){
             renderTask(item, list);
         }
     })
@@ -201,8 +193,8 @@ function getProjectName(){
 
 function renderCurrentProject(){
 //refreshes the rendering of the current project
-    if (getProjectName() === "all"){
-        renderProject("all");
+    if (getProjectName() === "All Tasks"){
+        renderProject("All Tasks");
     }
     else{
         renderProject(getProjectName());
@@ -237,7 +229,7 @@ function renderProjectBind() {
         projectBind.removeChild(projectBind.firstChild);
     }
     projectNames.forEach((item) => {
-        if (item !== "all"){
+        if (item !== "All Tasks"){
             let projectName = document.createElement("option");
             projectName.textContent = item;
             projectName.value = item;

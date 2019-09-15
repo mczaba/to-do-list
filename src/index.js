@@ -4,4 +4,4 @@ import {initializeArrays, createTask, addTaskToProject} from "./todos"
 initializeArrays();
 events();
 renderProjects()
-renderProject("all");
+renderProject("All Tasks");
